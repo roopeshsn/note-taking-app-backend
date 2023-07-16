@@ -1,0 +1,26 @@
+version: '3.7'
+services:
+  app:
+    container_name: note-taking-app
+    image: roopeshsn/note-taking-app:1.0.0
+    build: .
+    ports:
+      - 8080:8080
+    depends_on:
+      - note-taking-app-db
+    environment:
+      DATABASE_URL: "host=postgres user=postgres password=postgres dbname=postgres port=5433 sslmode=disable"
+      SECRET: rAo3B9sN
+  note-taking-app-db:
+    container_name: note-taking-app-db
+    image: postgres:14
+    ports:
+      - 5434:5434
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: postgres
+    volumes:
+      - pgdb:/var/lib/postgresql/data
+volumes:
+  pgdb: {}
